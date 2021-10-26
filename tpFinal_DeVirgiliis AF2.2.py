@@ -125,3 +125,29 @@ def eliminar():
          limpiarCampos()
          mostrar()
 
+
+
+ #Menu        
+
+menubar=Menu(root)
+menubasedat=Menu(menubar, tearoff=0)
+menubasedat.add_command(label="Conectar", command=conexionBBDD)
+menubasedat.add_command(label="Eliminar base de datos", command=eliminarBBDD)
+menubar.add_cascade(label="Inicio", menu=menubasedat)
+
+
+ayudamenu=Menu(menubar, tearoff=0)
+ayudamenu.add_command(label="Limpiar campos", command=limpiarCampos)
+
+menubar.add_cascade(label="Ayuda", menu=ayudamenu)
+
+
+
+root.config(menu=menubar)
+
+         
+
+
+root.mainloop()
+        
+    
