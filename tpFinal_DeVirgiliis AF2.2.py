@@ -127,7 +127,8 @@ def eliminar():
 
 
 
- #Menu        
+
+##Menu        
 
 menubar=Menu(root)
 menubasedat=Menu(menubar, tearoff=0)
@@ -140,6 +141,44 @@ ayudamenu=Menu(menubar, tearoff=0)
 ayudamenu.add_command(label="Limpiar campos", command=limpiarCampos)
 
 menubar.add_cascade(label="Ayuda", menu=ayudamenu)
+
+
+l1=Label(root, text="Legajo")
+l1.place(x=50,y=10)
+e1=Entry(root, textvariable=miLegajo)
+e1.place(x=100,y=10)
+
+l2=Label(root, text="Nombre y Apellido")
+l2.place(x=50,y=40)
+e2=Entry(root, textvariable=miNombre, width=50)
+e2.place(x=160,y=40)
+
+l3=Label(root, text="Puesto")
+l3.place(x=200,y=40)
+e3=Entry(root, textvariable=miCargo)
+e3.place(x=280,y=40)
+
+l4=Label(root, text="Sucursal")
+l4.place(x=280,y=10)
+e4=Entry(root, textvariable=miSucursal, width=10)
+e4.place(x=320,y=40)
+
+b1=Button(root, text="Crear", command=crear)
+b1.place(x=50,y=90)
+
+
+b2=Button(root, text="Leer", command=mostrar)
+b2.place(x=180,y=90)
+
+b3=Button(root, text="Actualizar", command=actualizar)
+b3.place(x=320,y=90)
+
+b4=Button(root, text="Eliminar", command=eliminar)
+b4.place(x=450,y=90)
+
+
+
+
 
 
 
