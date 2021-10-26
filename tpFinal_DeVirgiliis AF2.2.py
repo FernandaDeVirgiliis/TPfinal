@@ -88,5 +88,40 @@ def mostrar():
           pass
         
 
+#Creacion de tabla
+tree=ttk.Treeview(height=10, columns=('#1','#2','#3'))
+tree.place(x=0, y=130)
+tree.heading('#0', text="Legajo", anchor=CENTER)
+tree.heading('#1', text="Nombre", anchor=CENTER)
+tree.heading('#2', text="Puesto", anchor=CENTER)
+tree.heading('#3', text="Sucursal", anchor=CENTER)
 
+#Creacion de funcion UDPATE
+def actualizar():
+     miConexion=sqlite3.connect("bd")
+     miCursor=miConexion.cursor()
+     try:
+         datos=miNombre.get(),miCargo.get(),miSucursal.get()
+         miCursor.execute("INSERT empleado SET NOMBRE=?,PUESTO=?,SUCURSAL=? WHERE Legajo=+miLegajo.get()(datos))")
+         miConexion.commit()
+
+     except:
+          messagebox.showarning("Ha ocurrido un error al actualizar el registro")
+          pass
+          limpiarCampos()
+          mostrar()
+    
+#Creacion de funcion ELIMINAR
+
+def eliminar():
+    miConexion=sqlite3.connect("bd")
+    miCursor=miConexion.cursor()
+    try:
+        if messagebox.askyesno(message="Está segurx que desea eliminar el registro?", title="Advertencia"):
+            miCursor.execute("DELETE FROM empleado WHERE Legajo=+miLegajo.get()")
+    except:
+         messagebox.showarning("Ha ocurrido un error al eliminar los registros")
+         pass
+         limpiarCampos()
+         mostrar()
 
