@@ -59,5 +59,34 @@ def limpiarCampos():
     miCargo.set("")
     miSucursal.set("")
 
+#Creacion métodos CRUD
+
+def crear():
+     miConexion=sqlite3.connect("bd")
+     miCursor=miConexion.cursor()
+     try:
+         datos=miLegajo.get(),miNombre.get(),miCargo.get(),miSucursal.get()
+         miCursor.execute("INSERT INTO empleado VALUES(NULL,?,?,?)", (datos))
+         miConexion.commit()
+     except:
+          messagebox.showarning("Ha ocurrido un error en el registro, verifique la conexion a la BD")
+          pass
+          limpiarCampos()
+          mostrar()
+def mostrar():
+     miConexion=sqlite3.connect("bd")
+     miCursor=miConexion.cursor()
+     registros=tree.get_children()
+     for elemento in registros:
+         tree.delete(elemento)
+
+     try:
+         miCursor.execute("SELECT * FROM empleado")
+         for row in miCursor:
+             tree.insert("",0,text=row[0],values=(row[1],row[2],[row3]))
+     except:
+          pass
+        
+
 
 
