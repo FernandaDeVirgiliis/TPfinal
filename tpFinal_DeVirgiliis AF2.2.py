@@ -61,19 +61,18 @@ def limpiarCampos():
 
 #Creacion métodos CRUD
 
+
 def crear():
-     miConexion=sqlite3.connect("mydatabase.db")
-     miCursor=miConexion.cursor()
-     try:
-         datos=miLegajo.get(),miNombre.get(),miCargo.get(),miSucursal.get()
-         miCursor.execute("INSERT INTO empleado VALUES(NULL,?,?,?)", (datos))
-         miConexion.commit()
-     except:
-          #es con dos w
-          messagebox.showarning("Precaucion","Ha ocurrido un error en el registro, verifique la conexion a la BD")
-          pass
-          limpiarCampos()
-          mostrar()
+    miConexion=sqlite3.connect("mydatabase.db")
+    miCursor=miConexion.cursor()
+    datos=miLegajo.get(),miNombre.get(),miCargo.get(),miSucursal.get()
+    print(datos)
+    consulta=("INSERT INTO empleado VALUES (?,?,?,?)")
+    resultado=miCursor.execute(consulta,[miLegajo.get(),miNombre.get(),miCargo.get(),miSucursal.get()])
+    miConexion.commit()
+    
+    messagebox.showinfo("BBDD","Registro insertado con éxito")
+
 
 
 def mostrar():
@@ -111,7 +110,7 @@ def actualizar():
          miConexion.commit()
 
      except:
-          messagebox.showarning("Ha ocurrido un error al actualizar el registro")
+          messagebox.showwarning("Ha ocurrido un error al actualizar el registro")
           pass
           limpiarCampos()
           mostrar()
@@ -126,7 +125,7 @@ def eliminar():
             miCursor.execute("DELETE FROM empleado WHERE Legajo=+miLegajo.get()")
             miConexion.commit()
     except:
-         messagebox.showarning("Ha ocurrido un error al eliminar los registros")
+         messagebox.showwarning("Ha ocurrido un error al eliminar los registros")
          pass
          limpiarCampos()
          mostrar()
@@ -162,9 +161,9 @@ e2=Entry(root, textvariable=miNombre, width=50)
 e2.place(x=100,y=40)
 
 l3=Label(root, text="Puesto")
-l3.place(x=200,y=40)
+l3.place(x=50,y=70)
 e3=Entry(root, textvariable=miCargo)
-e3.place(x=240,y=40)
+e3.place(x=100,y=70)
 
 l4=Label(root, text="Sucursal")
 l4.place(x=230,y=10)
@@ -172,17 +171,17 @@ e4=Entry(root, textvariable=miSucursal, width=10)
 e4.place(x=280,y=10)
 
 b1=Button(root, text="Crear", command=crear)
-b1.place(x=50,y=90)
+b1.place(x=50,y=100)
 
 
 b2=Button(root, text="Leer", command=mostrar)
-b2.place(x=180,y=90)
+b2.place(x=180,y=100)
 
 b3=Button(root, text="Actualizar", command=actualizar)
-b3.place(x=320,y=90)
+b3.place(x=320,y=100)
 
 b4=Button(root, text="Eliminar", bg="red", command=eliminar)
-b4.place(x=450,y=90)
+b4.place(x=450,y=100)
 
 
 ###############
