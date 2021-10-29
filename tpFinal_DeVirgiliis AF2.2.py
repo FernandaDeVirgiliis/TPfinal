@@ -24,7 +24,7 @@ def conexionBBDD():
         miCursor.excute
         ('''
             CREATE TABLE empleado (
-            LEGAJO INTEGER PRIMARY KEY AUTOINCREMENT,
+            LEGAJO INTEGER PRIMARY KEY
             NOMBRE VARCHAR(50),
             CARGO VARCHAR(50),
             SUCURSAL VARCHAR(50)
@@ -66,7 +66,7 @@ def crear():
     miConexion=sqlite3.connect("mydatabase.db")
     miCursor=miConexion.cursor()
     datos=miLegajo.get(),miNombre.get(),miCargo.get(),miSucursal.get()
-    print(datos)
+    #print(datos)
     consulta=("INSERT INTO empleado VALUES (?,?,?,?)")
     resultado=miCursor.execute(consulta,[miLegajo.get(),miNombre.get(),miCargo.get(),miSucursal.get()])
     miConexion.commit()
@@ -74,32 +74,33 @@ def crear():
     messagebox.showinfo("BBDD","Registro insertado con éxito")
 
 
+print ("asdasdasd")
+#Creacion de tabla
+tree = ttk.Treeview(height = 4, columns = ("#0","#1","#2",'#3'))
+tree.place (x = 40, y = 150)
+tree.heading('#0', text = 'Nombre', anchor = CENTER)
+tree.heading('#1', text = 'Apellido', anchor = CENTER)
+tree.heading('#2', text = 'Teléfono', anchor = CENTER)
+tree.heading('#3', text = 'Mail', anchor = CENTER)
 
 def mostrar():
-     miConexion=sqlite3.connect("mydatabase.db")
-     miCursor=miConexion.cursor()
-     registros=tree.get_children()
-     for elemento in registros:
-         tree.delete(elemento)
 
-     try:
-         miCursor.execute("SELECT * FROM empleado")
-         for row in miCursor:
-             tree.insert("",0,text=row[0],values=(row[1],row[2],[row3]))
-     except:
-          pass
-        
+    miConexion=sqlite3.connect("mydatabase.db")
+    miCursor=miConexion.cursor()
+    registros=tree.get_children()
+    for elemento in registros:
+        tree.delete(elemento)
 
-#Creacion de tabla
-tree=ttk.Treeview(height=10, columns=('#1','#2','#3'))
-tree.place(x=0, y=130)
-tree.heading('#0', text="Legajo", anchor=CENTER)
-tree.heading('#1', text="Nombre", anchor=CENTER)
-tree.heading('#2', text="Puesto", anchor=CENTER)
-tree.heading('#3', text="Sucursal", anchor=CENTER)
+    miCursor.execute("SELECT * FROM empleado")
+    print (miCursor)
+    for row in miCursor:
+         tree.insert('', 0, text = (row[0]), values = (row[1],row[2], row[3]))
+         print (row[0])
 
-
+#mostrar registros de la bbdd
+mostrar()
     
+
 #Creacion de funcion UDPATE
 def actualizar():
      miConexion=sqlite3.connect("mydatabase.db")
@@ -125,7 +126,7 @@ def eliminar():
             miCursor.execute("DELETE FROM empleado WHERE Legajo=+miLegajo.get()")
             miConexion.commit()
     except:
-         messagebox.showwarning("Ha ocurrido un error al eliminar los registros")
+         messagebox.showwarning("Precaución","Ha ocurrido un error al eliminar los registros")
          pass
          limpiarCampos()
          mostrar()
@@ -134,7 +135,7 @@ def eliminar():
 
 ###################
 
-#Colocaciónd de elementos en la ventana
+#Colocación de elementos en la ventana
 ##Menu        
 
 menubar=Menu(root)
@@ -174,7 +175,7 @@ b1=Button(root, text="Crear", command=crear)
 b1.place(x=50,y=100)
 
 
-b2=Button(root, text="Leer", command=mostrar)
+b2=Button(root, text="Mostrar", command=mostrar)
 b2.place(x=180,y=100)
 
 b3=Button(root, text="Actualizar", command=actualizar)
